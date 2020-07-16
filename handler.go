@@ -2,9 +2,10 @@ package gosocketio
 
 import (
 	"encoding/json"
-	"github.com/graarh/golang-socketio/protocol"
-	"sync"
 	"reflect"
+	"sync"
+
+	"github.com/graarh/golang-socketio/protocol"
 )
 
 const (
@@ -98,12 +99,7 @@ func (m *methods) processIncomingMessage(c *Channel, msg *protocol.Message) {
 			return
 		}
 
-		data := f.getArgs()
-		err := json.Unmarshal([]byte(msg.Args), &data)
-		if err != nil {
-			return
-		}
-
+		data := []byte(msg.Args)
 		f.callFunc(c, data)
 
 	case protocol.MessageTypeAckRequest:
